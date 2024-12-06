@@ -1,0 +1,35 @@
+# Autor: Julio A. Leyva Osorio
+# GitHub: https://github.com/Snet-Cuba , https://github.com/Tony931023
+# Email: snet3040@gmail.com , tony931023@gmail.com
+
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    # Corre el workflow cada 5 minutos
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la interfaz de GitHub
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Fork
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}
+      
+      - name: Add Upstream Repo
+        run: git remote add upstream https://github.com/azerothcore/azerothcore-wotlk.git
+
+      - name: Fetch Upstream
+        run: git fetch upstream
+
+      - name: Merge Upstream Changes
+        run: git merge upstream/main --allow-unrelated-histories || true
+
+      - name: Push Changes to Fork
+        run: git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
