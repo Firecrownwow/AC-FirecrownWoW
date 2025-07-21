@@ -32,13 +32,13 @@ enum AccountOpResult
     AOR_DB_INTERNAL_ERROR
 };
 
-#define MAX_ACCOUNT_STR 20
+#define MAX_ACCOUNT_STR 17
 #define MAX_PASS_STR 16
 #define MAX_EMAIL_STR 255
 
 namespace AccountMgr
 {
-    AccountOpResult CreateAccount(std::string username, std::string password);
+    AccountOpResult CreateAccount(std::string username, std::string password, std::string email = "");
     AccountOpResult DeleteAccount(uint32 accountId);
     AccountOpResult ChangeUsername(uint32 accountId, std::string newUsername, std::string newPassword);
     AccountOpResult ChangePassword(uint32 accountId, std::string newPassword);
